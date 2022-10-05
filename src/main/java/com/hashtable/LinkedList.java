@@ -62,6 +62,29 @@ public class LinkedList<K, V> {
 		}
 		return count;
 	}
+	
+	public MyMapNode<K,V> search(K searchData) {
+        MyMapNode<K,V> temp = head;
+        while(temp != null){
+            if(temp.key.equals(searchData))
+                return temp;
+            temp = temp.next;
+        }
+        return null;
+    }
+
+
+    public void append(MyMapNode<K,V> node ) {
+        MyMapNode<K, V> temp=head;
+        if(head == null) {
+            head = node;
+            temp = node;
+        }
+        else{
+        	temp.next = node;
+        	temp = node;
+        }
+    }
 
 	/**
 	 * Method to print all the key value pair present in the hash table 

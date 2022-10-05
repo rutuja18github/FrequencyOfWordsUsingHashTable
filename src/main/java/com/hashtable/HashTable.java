@@ -1,44 +1,60 @@
 package com.hashtable;
 
+import java.util.ArrayList;
+
 public class HashTable<K, V> {
 	LinkedList<K, V> linkedList;
+	int bucketSize;
+	ArrayList<LinkedList<K, V>> bucketList;
 
 	public HashTable() {
-		this.linkedList = new LinkedList<>();
+		this.bucketSize = 10;
+		this.bucketList = new ArrayList<>(bucketSize);
+		for (int i = 0; i < bucketSize; i++) {
+			bucketList.add(null);
+		}
 	}
 
-	/**
-	 * check key present or not to find that use linked list's keyIsPresent method  
-	 **/
-	public boolean keyIsPresent(String key) {
-		return linkedList.keyIsPresent(key);
-	}
-	  
-	/**
-	 * add enty in hash table for that use linked list's addEntry method  
-	 **/
-	public void put(K word, V count) {
-		linkedList.addEntry(word, count);
-	}
-	
-	/**
-	 * display entry's in hash table using print method of linked list
-	 **/
-	public void display() {
-		linkedList.print();
+	public Integer getIndex(K key) {
+		int hashCode = Math.abs(key.hashCode());
+		int index = hashCode % bucketSize;
+		return index;
 	}
 
-	/**
-	 * to find count of words
-	 **/
-	public int getWord(String word) {
-		return linkedList.get(word);
+	public V get(K key) {
+		int index = getIndex(key);
+		LinkedList<K, V> linkedList = bucketList.get(index);
+		if (linkedList == null) {
+			return null;
+		}
+		MyMapNode<K, V> myMapNode = linkedList.search(key);
+		return (myMapNode == null) ? null : myMapNode.value;
 	}
 
-	/**
-	 * replace previous key value with new one
-	 **/
-	public void replaceWord(K key, V value) {
-		linkedList.replace(key, value);
+	public void add(K key, V value) {
+		int index = getIndex(key);
+		LinkedList<K, V> linkedList = bucketList.get(index);
+		if (linkedList == null) {
+			linkedList = new LinkedList<>();
+			bucketList.set(index, linkedList);
+		}
+		MyMapNode<K, V> myMapNode = linkedList.search(key);
+		if (myMapNode == null) {
+			myMapNode = new MyMapNode<>(key, value);
+			linkedList.append(myMapNode);
+		} else {
+			myMapNode.value = value;
+		}
 	}
+
+	void print() {
+		for (LinkedList<K, V> linkedList : bucketList) {
+			if (linkedList == null) {
+				continue;
+			}
+			linkedList.print();
+
+		}
+	}
+
 }

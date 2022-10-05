@@ -7,21 +7,20 @@ package com.hashtable;
 public class App {
 	public static void main(String[] args) {
 		System.out.println("Find Frequency Of Words using Hash Table in ");
-		String sentence = "to be or not to be ";
-		// Split Words present in sentence and store into array
-		String[] splitArray = sentence.split(" ");
+		String paragraph = "paranoids are not paranoid because they are paranoid but because they keep putting themselves deliberately into paranoid avoidable situations";
+		String[] arrayOfSplitedWords = paragraph.split(" ");
 
 		HashTable<String, Integer> hashTable = new HashTable<>();
-		for (String word : splitArray) {
-			//check that word is present in hash table or not
-			if (hashTable.keyIsPresent(word)) {
-				int value = hashTable.getWord(word);
-				hashTable.replaceWord(word, value + 1);//replace word and count it's frequency
-			} else {
-				hashTable.put(word, 1);//if word not exist then store in hash table
-			}
-		}
-		hashTable.display();
-	}
 
+		for (String word : arrayOfSplitedWords) {
+			Integer value = hashTable.get(word);
+			if (value == null) {
+				value = 1;
+			} else {
+				value = value + 1;
+			}
+			hashTable.add(word, value);
+		}
+		hashTable.print();
+	}
 }
