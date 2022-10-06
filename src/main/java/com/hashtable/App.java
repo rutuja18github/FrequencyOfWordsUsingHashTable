@@ -22,5 +22,8 @@ public class App {
 			hashTable.add(word, value);
 		}
 		hashTable.print();
+		hashTable.remove("avoidable");
+		System.out.println("\n\n");
+		hashTable.print();
 	}
 }

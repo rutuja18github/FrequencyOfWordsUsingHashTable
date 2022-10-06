@@ -47,6 +47,12 @@ public class HashTable<K, V> {
 		}
 	}
 
+	public void remove(K key) {
+		int index = getIndex(key);
+		LinkedList<K, V> list = bucketList.get(index);
+		list.delete(key);
+	}
+
 	void print() {
 		for (LinkedList<K, V> linkedList : bucketList) {
 			if (linkedList == null) {
